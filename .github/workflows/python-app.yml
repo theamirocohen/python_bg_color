@@ -49,7 +49,7 @@ jobs:
           path: helm_py_bg_color
     - name: Update file
       run: |
-          #echo "New content" >> helm_py_bg_color/values.yaml
+         echo $TAG_NAME >> helm_py_bg_color/values.yaml
           yq eval ".image.tag = \"$TAG_NAME\"" -i helm_py_bg_color/values.yaml
     - name: Set up Git
       run: |
