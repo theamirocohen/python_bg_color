@@ -47,6 +47,10 @@ jobs:
     - name: Update file
       run: |
           echo "New content" >> helm_py_bg_color/values.yaml
+    - name: Set up Git
+      run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
     - name: Commit and push
       working-directory: helm_py_bg_color
       run: |
