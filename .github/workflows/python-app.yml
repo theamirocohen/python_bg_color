@@ -34,4 +34,21 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Create tag and push
+      run: |
+          TAG_NAME="v1.0.${GITHUB_RUN_NUMBER}"
+          echo "Updating image.tag to ${TAG_NAME}"
+    - name: Checkout the Helm chart repo
+      uses: actions/checkout@v3
+      with:
+          repository: https://github.com/theamirocohen/helm_py_bg_color
+          #token: ${{ secrets.GITHUB_TOKEN }}
+          path: values.yaml
+    - name: Modify Helm chart values.yaml
+      run: |
+          cd chart-repo
+          yq eval ".image.tag = \"$TAG_NAME\"" -i chart-repo/values.yaml
+          git add values.yaml
+          git commit -m "Update values.yaml for new app version"
+          git push origin main
 
