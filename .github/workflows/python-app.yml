@@ -34,10 +34,6 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Create tag and push
-      run: |
-          TAG_NAME="v1.0.${GITHUB_RUN_NUMBER}"
-          echo "Updating image.tag to ${TAG_NAME}"
     - name: Debug - Check if PAT is set
       run: |
           echo "PAT2 exists: ${{ secrets.PAT2 != '' }}"
@@ -47,9 +43,10 @@ jobs:
           repository: theamirocohen/helm_py_bg_color
           token: ${{ secrets.PAT2 }}
           path: helm_py_bg_color
-    - name: Update file
+    - name: Create tag and update file
       run: |
-          echo $TAG_NAME >> helm_py_bg_color/values.yaml
+          TAG_NAME="v1.0.${GITHUB_RUN_NUMBER}"
+          echo "Updating image.tag to ${TAG_NAME}"
           yq eval ".image.tag = \"$TAG_NAME\"" -i helm_py_bg_color/values.yaml
     - name: Set up Git
       run: |
