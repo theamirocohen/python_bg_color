@@ -43,11 +43,13 @@ jobs:
       with:
           repository: theamirocohen/helm_py_bg_color
           #token: ${{ secrets.GITHUB_TOKEN }}
-          #path: values.yaml
+          path: helm_py_bg_color
+    - name: Update file
+      run: |
+          echo "New content" >> helm_py_bg_color/values.yaml
     - name: Commit and push
       working-directory: helm_py_bg_color
       run: |
-          yq eval ".image.tag = \"$TAG_NAME\"" -i helm_py_bg_color/values.yaml
           git add .
           git commit -m "test values"
           git push
