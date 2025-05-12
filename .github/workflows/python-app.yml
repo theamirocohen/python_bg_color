@@ -41,7 +41,7 @@ jobs:
     - name: Checkout the Helm chart repo
       uses: actions/checkout@v3
       with:
-          repository: https://github.com/theamirocohen/helm_py_bg_color
+          repository: theamirocohen/helm_py_bg_color
           #token: ${{ secrets.GITHUB_TOKEN }}
           path: values.yaml
     - name: Modify Helm chart values.yaml
