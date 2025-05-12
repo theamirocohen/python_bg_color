@@ -46,7 +46,6 @@ jobs:
           path: values.yaml
     - name: Modify Helm chart values.yaml
       run: |
-          cd chart-repo
           yq eval ".image.tag = \"$TAG_NAME\"" -i chart-repo/values.yaml
           git add values.yaml
           git commit -m "Update values.yaml for new app version"
